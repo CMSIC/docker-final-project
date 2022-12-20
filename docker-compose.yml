@@ -1,0 +1,40 @@
+# Erreur pdo could not find driver..
+services:
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes:
+      - ./www/html/:/var/www/html/
+
+  php:
+    build: ./php/
+    image: php:7.0-fpm
+    container_name: php-container
+    ports:
+    - 9000:9000
+    volumes:
+    - ./www/html/:/var/www/html/
+
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    expose:
+      - 3306
+    ports:
+      - 127.0.0.1:3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb_test
+      MYSQL_USER: adib
+      MYSQL_PASSWORD: adib
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
+
+
+
+
