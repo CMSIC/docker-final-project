@@ -1,6 +1,14 @@
-FROM php:7.0-fpm
+FROM php:8.1-fpm-alpine
 
-RUN apt-get update \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
-    && docker-php-ext-enable pdo_mysql
+WORKDIR /var/www/html
 
+EXPOSE 9000
+
+RUN apk add --no-cache curl
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN apk add --no-cache zip libzip-dev
+RUN docker-php-ext-configure zip
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install pdo pdo_mysql
