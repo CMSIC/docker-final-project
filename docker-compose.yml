@@ -11,8 +11,6 @@ services:
       - "8081:80"
     links:
       - php
-    depends_on:
-      - php
   nginx2:
     image: nginx:latest
     build:
@@ -24,10 +22,8 @@ services:
       - "8082:80"
     links:
       - php2
-    depends_on:
-      - php2
   php:
-    image: php:7.4-fpm
+    image: php:7.0-fpm
     build:
         context: ./php/
         dockerfile: Dockerfile
@@ -38,7 +34,7 @@ services:
     links:
       - db
   php2:
-    image: php:7.4-fpm
+    image: php:7.0-fpm
     build:
         context: ./php/
         dockerfile: Dockerfile
