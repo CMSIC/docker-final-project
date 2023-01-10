@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS `mydb_test`;
+
+CREATE DATABASE `mydb_test`;
+
 use mydb_test;
 
 DROP TABLE IF EXISTS baba;
