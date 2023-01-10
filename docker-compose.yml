@@ -1,5 +1,21 @@
 version: '3'
 services:
+  app:
+    build:
+      args:
+        user: adam
+        uid: 1000
+      context: ./app
+      dockerfile: Dockerfile
+    image: my-app
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./app :/var/www
+    ports:
+      - "8083:80"
+
   nginx:
     image: nginx:latest
     build:
