@@ -21,6 +21,7 @@ services:
         dockerfile: Dockerfile
     volumes:
       - ./conf/:/etc/nginx/conf.d/
+      - ./php/app:/var/www/html
     ports:
       - "8081:80"
     links:
@@ -31,19 +32,17 @@ services:
         context: ./nginx/
         dockerfile: Dockerfile
     volumes:
-      - ./conf/:/etc/nginx/conf.d/
+      - ./conf2/:/etc/nginx/conf.d/
     ports:
       - "8082:80"
-    links:
-      - php2
   php:
     build:
         context: ./php/
         dockerfile: Dockerfile
+    volumes:
+      - ./php/app:/var/www/html
     ports:
       - "9000:9000"
-    volumes:
-      - ./app:/var/www/html
     links:
       - db
   php2:
@@ -53,7 +52,7 @@ services:
     ports:
         - "9001:9000"
     volumes:
-        - ./app:/var/www/html
+      - ./php/app:/var/www/html
     links:
         - db
   db:
