@@ -5,14 +5,12 @@ services:
       args:
         user: adam
         uid: 1000
-      context: ./app
+      context: ./php/app
       dockerfile: Dockerfile
     image: my-app
     container_name: laravel-app
     restart: unless-stopped
-    working_dir: /var/www/
-    volumes:
-      - ./app :/var/www
+    working_dir: /var/www/html
     ports:
       - "8083:80"
 
@@ -39,7 +37,6 @@ services:
     links:
       - php2
   php:
-    image: php:7.0-fpm
     build:
         context: ./php/
         dockerfile: Dockerfile
@@ -50,7 +47,6 @@ services:
     links:
       - db
   php2:
-    image: php:7.0-fpm
     build:
         context: ./php/
         dockerfile: Dockerfile
